@@ -44,6 +44,27 @@ router.post('/',async function(req,res,next){
 
 });
 
+//view_user_profile
+router.get('/:id',async (req, res, next)=>{
+  try{
+    
+    const id = req.params.id;
+    let user = await models.User.findByPk(id,{
+      include: [{ model: models.Student},{ model: models.Enterprise}]
+    });
+
+    res.status(200).json({ 
+      status: 200,
+      payload: {
+        user: user
+      }
+    });
+
+  }catch(err){
+    next(err);
+  }
+});
+
 
 
 module.exports = router;
