@@ -42,7 +42,7 @@ router.get('/:id',async function(req,res,next){
   try{
     const id = req.params.id
     const enterprise = await models.Enterprise.findByPk(id,{
-      include: [{model: models.User}]
+      include: [{model: models.User,},{model: models.Enterprise}]
     });
 
     return res.status(200).json({

@@ -30,7 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {},
               child: const CircleAvatar(
                 backgroundColor: Colors.white,
-                child: Image(image: AssetImage('assets/avatar_image.jpg')),
+                child: Icon(Icons.car_rental_outlined),
+                // child: Image(image: AssetImage('assets/avatar_image.jpg')),
               ),
             ),
           )
@@ -39,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       
       body:  PasantiasCards(),
       
-      
+      drawer: Drawer(),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.orange,
         selectedItemColor: Colors.black,
