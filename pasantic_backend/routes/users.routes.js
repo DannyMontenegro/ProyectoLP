@@ -65,6 +65,42 @@ router.get('/:id',async (req, res, next)=>{
   }
 });
 
+router.delete('/:id', async (req, res,next)=>{
+  try{
+    const id =  req.params.id;
+
+    let user = await models.User.findByPk(id,{
+      include: [{ model: models.Student},{ model: models.Enterprise}]
+    });
+
+    if(user.Student !=null){
+      let intershipsStudent = await models.InternshipStudent.destroy({
+        where:{
+          idStudent : user.Student.id
+        }
+      });
+
+      let student = await models.Student.destroy({
+        where:{
+          id: user.Student.id
+        }
+      })
+
+      await models.User.destroy({
+        where:{
+          id: user.id
+        }
+      })
+      
+
+    }
+    res.status(200).json({"sucess": "Cuenta eliminada satisfactoriamente"})
+
+  }catch(err){
+    next(err);
+  }
+});
+
 
 
 module.exports = router;
