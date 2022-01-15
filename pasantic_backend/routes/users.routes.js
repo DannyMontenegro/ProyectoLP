@@ -93,7 +93,43 @@ router.delete('/:id', async (req, res,next)=>{
       })
       
 
+    }else{
+
+      let pasantias = await models.Internship.findAll({
+        where : {
+          idEnterprise : user.Enterprise.id
+        }
+      })
+      
+      for(let i = 0; i<pasantias.length; i++){
+        let pasantia = pasantias[i];
+        await models.InternshipStudent.destroy({
+          where : {
+            idInternship : pasantia.id
+          }
+        })
+      }
+
+      let internship = await models.Internship.destroy({
+        where : {
+          idEnterprise : user.Enterprise.id
+        }
+      })
+
+      let enterprise = await models.Enterprise.destroy({
+        where : {
+          id: user.Enterprise.id
+        }
+      })
+
+      await models.User.destroy({
+        where:{
+          id: user.id
+        }
+      })
+
     }
+
     res.status(200).json({"sucess": "Cuenta eliminada satisfactoriamente"})
 
   }catch(err){
