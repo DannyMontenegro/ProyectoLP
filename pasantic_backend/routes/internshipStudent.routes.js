@@ -5,11 +5,12 @@ const Sequelize = require('sequelize');
 const models = require('../models');
 
 
-router.get('/', async (req, res, next) =>{
+router.get('/', async function(req, res, next){
     try {
         internshipsStudents = await models.InternshipStudent.findAll({
             include: [{ model: models.Student},{ model: models.Internship}]
         });
+        res.status(201).json(internshipsStudents);
     }catch(err){
         next(err);
     }
