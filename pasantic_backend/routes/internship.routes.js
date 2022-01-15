@@ -55,6 +55,29 @@ router.post('/',async (req,res,next) => {
     }
 });
 
+router.get('/interns/:id', async (req, res, next)=>{
+    try{
+        const id = req.params.id
+
+        let interns =await  models.InternshipStudent.findAll({
+            where : {
+                idInternship : id
+            },
+            include : [{model: models.Student}]
+        })
+
+        return res.status(200).json({
+            status: 200,
+            payload: {
+                interns: interns
+            }
+        })
+
+    }catch(err){
+        next(err);
+    }
+})
+
 
 
 module.exports =router;
