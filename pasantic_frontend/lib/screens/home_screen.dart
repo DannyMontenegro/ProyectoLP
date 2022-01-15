@@ -30,17 +30,13 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {},
               child: const CircleAvatar(
                 backgroundColor: Colors.white,
-                child: Icon(Icons.car_rental_outlined),
-                // child: Image(image: AssetImage('assets/avatar_image.jpg')),
+                child: Icon(Icons.person),
               ),
             ),
           )
         ],
       ),
-      
-      body:  PasantiasCards(),
-      
-      drawer: Drawer(),
+      body: PasantiasCards(),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.orange,
         selectedItemColor: Colors.black,
@@ -50,7 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
         showUnselectedLabels: false,
         onTap: (index) {
           currentIndex = index;
-          setState(() {});
+          if(currentIndex==2){
+            Navigator.of(context).pushNamed('profile');
+          }
+          
         },
         items: [
           BottomNavigationBarItem(
@@ -62,9 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
               label: 'Postulaciones',
               backgroundColor: Colors.orange),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Perfil',
-              backgroundColor: Colors.orange)
+            icon: Icon(Icons.person),
+            label: 'Perfil',
+            backgroundColor: Colors.orange,
+          )
         ],
       ),
     );

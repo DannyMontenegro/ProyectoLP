@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
       initialRoute: 'home',
       routes: {
         'home': (_)=>const HomeScreen(),
+        'profile': (_)=>const ProfileScreen()
       },
 
       theme: ThemeData.light().copyWith(

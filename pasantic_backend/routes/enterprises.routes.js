@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+const { validatePagination} = require('../validations/pagination.validator')
 const Sequelize = require('sequelize');
 const models = require('../models');
 
@@ -17,7 +18,7 @@ router.get('/', async function(req, res, next) {
 });
 
 //create_enterpise
-router.post('/',async function(req,res,next){
+router.post('/',validatePagination(),async function(req,res,next){
   try{
     const { phone_number, idUser} = req.body;
 
