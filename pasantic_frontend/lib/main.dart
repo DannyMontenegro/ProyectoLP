@@ -33,6 +33,8 @@ class MyApp extends StatelessWidget {
         'home': (_)=>const HomeScreen(),
         'profile': (_)=>const ProfileScreen(),
         'details': (_)=>const InternshipDetailScreen(),
+        'login': (_)=>const LoginScreen(),
+        'register': (_)=>const RegisterScreen(),
       },
 
       theme: ThemeData.light().copyWith(
