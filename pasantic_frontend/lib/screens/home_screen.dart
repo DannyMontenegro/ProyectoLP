@@ -1,10 +1,15 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:pasantic_frontend/providers/internships_provider.dart';
 import 'package:pasantic_frontend/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
+  
+
   const HomeScreen({Key? key}) : super(key: key);
+  
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -15,6 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final intershipsProvider = Provider.of<InternshipsProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 10,
@@ -36,7 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: PasantiasCards(),
+      body: PasantiasCards(pasantias: intershipsProvider.internshipsResponses,
+        onNextPagePasantias: ()=>{ intershipsProvider.getInternships()},),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.orange,
         selectedItemColor: Colors.black,
