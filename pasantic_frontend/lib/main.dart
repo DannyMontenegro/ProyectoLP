@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pasantic_frontend/providers/internships_provider.dart';
+import 'package:pasantic_frontend/screens/internship_detail_screen.dart';
 import 'package:pasantic_frontend/screens/screens.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
       initialRoute: 'home',
       routes: {
         'home': (_)=>const HomeScreen(),
-        'profile': (_)=>const ProfileScreen()
+        'profile': (_)=>const ProfileScreen(),
+        'details': (_)=>const InternshipDetailScreen(),
       },
 
       theme: ThemeData.light().copyWith(

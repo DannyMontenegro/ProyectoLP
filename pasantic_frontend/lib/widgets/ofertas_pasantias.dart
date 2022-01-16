@@ -65,120 +65,123 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     _getEnterprise(widget.pasantia.idEnterprise);
-    print(widget.pasantia.dateFrom);
-    print(widget.pasantia.dateTo);
-    return Container(
-      width: size.width * 0.8,
-      child: Card(
-          elevation: 2,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-          color: Colors.white70,
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              children: [
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Container(
-                        constraints: BoxConstraints(minWidth: 150),
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, 'details',
+        arguments: widget.pasantia),
+      child: Container(
+        width: size.width,
+        child: Card(
+            
+            elevation: 2,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+            color: Colors.white70,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                children: [
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Container(
+                          constraints: BoxConstraints(minWidth: 150),
+                          alignment: Alignment.center,
+                          child: Text(
+                            widget.pasantia.title,
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          )),
+                      Container(
+                        alignment: Alignment.bottomRight,
+                        width: 20,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          shape: BoxShape.circle,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Container(
+                        child: Text('Company:'),
                         alignment: Alignment.center,
+                        constraints: BoxConstraints(minWidth: 150),
+                      ),
+                      Container(
                         child: Text(
-                          widget.pasantia.title,
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
-                        )),
-                    Container(
-                      alignment: Alignment.bottomRight,
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        shape: BoxShape.circle,
+                          enterprise != null
+                              ? enterprise['User']['name']
+                              : 'Empresa',
+                          style: TextStyle(color: Colors.orange.shade400,overflow: TextOverflow.ellipsis),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Container(
+                        child: Text('Location:'),
+                        alignment: Alignment.center,
+                        constraints: BoxConstraints(minWidth: 145),
                       ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Container(
-                      child: Text('Company:'),
-                      alignment: Alignment.center,
-                      constraints: BoxConstraints(minWidth: 250),
-                    ),
-                    Container(
-                      child: Text(
-                        enterprise != null
-                            ? enterprise['User']['name']
-                            : 'Empresa',
-                        style: TextStyle(color: Colors.orange.shade400),
+                      Container(
+                        child: Text(
+                          widget.pasantia.location,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.orange.shade400),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Container(
+                        child: Text('Salary:'),
+                        alignment: Alignment.center,
+                        constraints: BoxConstraints(minWidth: 130),
                       ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Container(
-                      child: Text('Location:'),
-                      alignment: Alignment.center,
-                      constraints: BoxConstraints(minWidth: 245),
-                    ),
-                    Container(
-                      child: Text(
-                        widget.pasantia.location,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.orange.shade400),
+                      SizedBox(
+                        width: 15,
                       ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Container(
-                      child: Text('Salary:'),
-                      alignment: Alignment.center,
-                      constraints: BoxConstraints(minWidth: 230),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Container(
-                      child: Text(
-                        '\$${widget.pasantia.payment}/mes',
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.black),
+                      Container(
+                        child: Text(
+                          '\$${widget.pasantia.payment}/mes',
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Container(
+                        child: Text('Period:'),
+                        alignment: Alignment.center,
+                        constraints: BoxConstraints(minWidth: 132),
                       ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Container(
-                      child: Text('Period:'),
-                      alignment: Alignment.center,
-                      constraints: BoxConstraints(minWidth: 230),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Container(
-                      child: Text(
-                        '${getDiffYMD(widget.pasantia.dateFrom,widget.pasantia.dateTo)} meses',
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.black),
+                      SizedBox(
+                        width: 15,
                       ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10),
-              ],
-            ),
-          )),
+                      Container(
+                        child: Text(
+                          '${getDiffYMD(widget.pasantia.dateFrom,widget.pasantia.dateTo)} meses',
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                ],
+              ),
+            )),
+      ),
     );
   }
 
