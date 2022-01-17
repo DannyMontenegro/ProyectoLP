@@ -16,7 +16,10 @@ router.get('/', async (req, res, next) => {
             offset: offset,
             include: [{ model: models.Enterprise },{model: models.InternshipStudent}]
         });
-        res.status(200).json(internships);
+        res.status(200).json({
+            status:200,
+            payload: internships
+        });
     }catch(err) {
         next(err);
     }

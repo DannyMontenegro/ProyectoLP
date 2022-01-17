@@ -103,8 +103,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Container(
                     
                     constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width * 0.4),
-                    child: Text('Carrera: ', style: TextStyle(fontSize: 20))),
+                        maxWidth: MediaQuery.of(context).size.width * 0.3),
+                    child: Text('Resumen: ', style: TextStyle(fontSize: 20))),
                 Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
@@ -115,7 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Text('Eiusmod elit aute deserunt velit Lorem proident elit et. Deserunt esse irure enim dolore et ex. Anim incididunt anim irure nostrud qui commodo commodo veniam exercitation. Tempor officia do labore sint occaecat dolor minim enim ea. Exercitation id quis do ipsum irure eiusmod aute dolor non excepteur ad occaecat do. Laboris non sint eu pariatur eiusmod enim fugiat.',
                     textAlign: TextAlign.justify,
                     maxLines: 7,
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 15),
                     overflow: TextOverflow.ellipsis),
                 )
               ]),
