@@ -81,6 +81,53 @@ router.get('/interns/:id', async (req, res, next)=>{
     }
 })
 
+router.put('/start/recluting/:id', async (req, res, next)=>{
+    try{
+        const id = req.params.id
+
+        await models.Internship.update({
+            isRecruiting:"1"
+        },{
+            where: {
+                id:id
+            }
+        });
+
+        return res.status(200).json({
+            status: 200,
+            payload: {
+                mensaje: "Cambiado exitosamente a 1"
+            }
+        })
+
+    }catch(err){
+        next(err);
+    }
+});
+router.put('/stop/recluting/:id', async (req, res, next)=>{
+    try{
+        const id = req.params.id
+
+        await models.Internship.update({
+            isRecruiting:"0"
+        },{
+            where: {
+                id:id
+            }
+        });
+
+        return res.status(200).json({
+            status: 200,
+            payload: {
+                mensaje: "Cambiado exitosamente a 0"
+            }
+        })
+
+    }catch(err){
+        next(err);
+    }
+})
+
 
 
 module.exports =router;
