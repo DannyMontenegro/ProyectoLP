@@ -4,11 +4,9 @@ var router = express.Router();
 const Sequelize = require('sequelize');
 const models = require('../models');
 
-router.get('/', async function(req, res, next) {
+router.post('/', async function(req, res, next) {
     try{
-        
         const { email, password} = req.body;
-        console.log(email,password)
         const user = await models.User.findOne({
             where: { 
                 "email":email,                

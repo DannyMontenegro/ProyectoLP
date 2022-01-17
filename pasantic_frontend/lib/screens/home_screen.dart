@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final intershipsProvider = Provider.of<InternshipsProvider>(context);
-
+    
     return Scaffold(
       appBar: AppBar(
         elevation: 10,
