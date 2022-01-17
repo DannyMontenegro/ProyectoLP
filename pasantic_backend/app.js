@@ -9,6 +9,7 @@ var enterprisesRouter = require('./routes/enterprises.routes');
 var studentsRouter = require('./routes/student.routes');
 var internshipsRouter = require('./routes/internship.routes');
 var intershipStduentRouter = require('./routes/internshipStudent.routes');
+var loginRouter = require('./routes/login.routes');
 
 var app = express();
 app.use(cors());
@@ -24,6 +25,7 @@ app.use('/enterprises',enterprisesRouter);
 app.use('/students',studentsRouter);
 app.use('/internships',internshipsRouter);
 app.use('/internshipStudent',intershipStduentRouter);
+app.use('/login',loginRouter);
 
 
 app.use((err, req, res, next) => {
