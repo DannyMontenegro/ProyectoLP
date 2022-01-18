@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Pasantic',
-      initialRoute: 'login',
+      initialRoute: 'internships',
       routes: {
         'home': (_)=>const HomeScreen(),
         'profile': (_)=>const ProfileScreen(),
@@ -38,6 +38,8 @@ class MyApp extends StatelessWidget {
         'login': (_)=>const LoginScreen(),
         'register': (_)=>const RegisterScreen(),
         'applications': (_)=>const ApplicationsScreen(),
+        'internships': (_)=> const IntershipsScreen(),
+        'newInternship': (_)=> const NewInternshipScreen(),
       },
 
       theme: ThemeData.light().copyWith(
