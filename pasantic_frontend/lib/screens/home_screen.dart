@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pasantic_frontend/providers/applications_provider.dart';
 import 'package:pasantic_frontend/providers/internships_provider.dart';
 import 'package:pasantic_frontend/providers/user_provider.dart';
@@ -34,10 +35,12 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             margin: const EdgeInsets.only(right: 10),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () async{
+                await SystemChannels.platform.invokeMethod('SystemNavigator.pop',true);
+              },
               child: const CircleAvatar(
                 backgroundColor: Colors.white,
-                child: Icon(Icons.person),
+                child: Icon(Icons.logout_rounded),
               ),
             ),
           )

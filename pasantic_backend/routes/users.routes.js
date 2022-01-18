@@ -22,6 +22,20 @@ router.get('/', async function(req, res, next) {
 router.post('/',async function(req,res,next){
   try{
     const { email, password, name, description, role} = req.body;
+
+    let userExits = await models.User.findOne({
+      where: {
+        email: email
+      }
+    })
+
+    if(userExits!=null){
+      return res.status(400).json({
+        status: 400,
+        message: "The email already exists"
+      })
+    }
+
     let user = await models.User.create({
       email: email,
       password: password,

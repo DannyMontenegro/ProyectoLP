@@ -14,6 +14,12 @@ router.get('/', async (req, res, next) => {
         internships = await models.Internship.findAll({
             limit: limit,
             offset: offset,
+            where: {
+                [Sequelize.Op.and]:{
+                    isActive:1,
+                    isRecruiting:1
+                }
+            },
             include: [{ model: models.Enterprise },{model: models.InternshipStudent}]
         });
         res.status(200).json({

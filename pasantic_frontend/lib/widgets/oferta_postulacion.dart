@@ -142,11 +142,14 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
                         ),
                         SizedBox(width: 10,),
                         Container(
+                          constraints: BoxConstraints(maxWidth: 170),
                           child: Text(
                             enterprise != null
                                 ? enterprise['User']['email']
                                 : 'Empresa',
+                            maxLines: 2,
                             style: TextStyle(
+
                                 color: Colors.orange.shade400,
                                 overflow: TextOverflow.ellipsis),
                           ),

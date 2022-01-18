@@ -3,9 +3,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pasantic_frontend/providers/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -17,7 +19,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   int currentIndex = 2;
 
-  
   @override
   Widget build(BuildContext context) {
     final dynamic user = (ModalRoute.of(context)!.settings.arguments);
@@ -118,8 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.all(Radius.circular(3))),
                   constraints: BoxConstraints(
                       maxWidth: MediaQuery.of(context).size.width * 0.6),
-                  child: Text(
-                      userData['description'],
+                  child: Text(userData['description'],
                       textAlign: TextAlign.justify,
                       maxLines: 7,
                       style: TextStyle(fontSize: 15),
@@ -128,7 +128,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ]),
               SizedBox(height: 20),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    dynamic id = user['payload']['user']['id'];
+                    const String baseUrl = '10.0.2.2:3001';
+                    String segment = '/users/$id';
+                    var url = Uri.http(baseUrl, segment);
+                    final response = await http.delete(url);
+                    final jsonData = json.decode(response.body);
+                    print("Hola");
+                    await SystemChannels.platform
+                        .invokeMethod('SystemNavigator.pop', true);
+                  },
                   child: Text("Eliminar Cuenta",
                       style: TextStyle(color: Colors.white)),
                   style: ButtonStyle(
@@ -153,9 +163,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (currentIndex == 0) {
             Navigator.of(context).pushNamed('home');
           }
-          if(currentIndex == 1) {
+          if (currentIndex == 1) {
+            dynamic pasantias;
+
+            pasantias = await User.getInsternshipsOfStudent(
+                '${json.decode(data)['payload']['user']['Student']['id']}');
             Navigator.of(context)
-                .pushNamed('applications',arguments: json.decode(data));
+                .pushNamed('applications', arguments: json.decode(pasantias));
           }
         },
         items: const [
