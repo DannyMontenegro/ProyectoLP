@@ -20,6 +20,21 @@ router.post('/', async (req, res, next) =>{
     try {
         const {idStudent,idInternship} = req.body;
 
+        let exists = await models.InternshipStudent.findAll({
+            where: {
+                idStudent: idStudent,
+                idInternship: idInternship
+            }
+        });
+
+        if(exists.length!=0){
+            res.status(200).json({
+                status: 200,
+                message: "Ya existe la postulacion"
+            });
+            return 
+        }
+
         let internshipStudent = await models.InternshipStudent.create({
             status: 'En Elección',
             idStudent: idStudent,

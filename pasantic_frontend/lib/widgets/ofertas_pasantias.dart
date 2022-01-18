@@ -5,14 +5,17 @@ import 'package:pasantic_frontend/models/models.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pasantic_frontend/helpers/getDiffTime.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PasantiasCards extends StatefulWidget {
   final List<Internship> pasantias;
   final Function onNextPagePasantias;
 
-  const PasantiasCards(
-      {Key? key, required this.pasantias, required this.onNextPagePasantias})
-      : super(key: key);
+  const PasantiasCards({
+    Key? key,
+    required this.pasantias,
+    required this.onNextPagePasantias,
+  }) : super(key: key);
 
   @override
   State<PasantiasCards> createState() => _PasantiasCardsState();
@@ -48,6 +51,7 @@ class _PasantiasCardsState extends State<PasantiasCards> {
 
 class CustomCardOffer extends StatefulWidget {
   final Internship pasantia;
+
   const CustomCardOffer({Key? key, required this.pasantia}) : super(key: key);
 
   @override
@@ -56,25 +60,28 @@ class CustomCardOffer extends StatefulWidget {
 
 class _CustomCardOfferState extends State<CustomCardOffer> {
   dynamic enterprise;
+  
   @override
   void initState() {
+    
     super.initState();
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     _getEnterprise(widget.pasantia.idEnterprise);
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, 'details',
-        arguments: widget.pasantia),
+      onTap: () =>
+          Navigator.pushNamed(context, 'details', arguments: widget.pasantia),
       child: Container(
         width: size.width,
         child: Card(
-            
             elevation: 2,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0)),
             color: Colors.white70,
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 30),
@@ -106,7 +113,9 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
                           enterprise != null
                               ? enterprise['User']['name']
                               : 'Empresa',
-                          style: TextStyle(color: Colors.orange.shade400,overflow: TextOverflow.ellipsis),
+                          style: TextStyle(
+                              color: Colors.orange.shade400,
+                              overflow: TextOverflow.ellipsis),
                         ),
                       )
                     ],
@@ -161,7 +170,7 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
                       ),
                       Container(
                         child: Text(
-                          '${getDiffYMD(widget.pasantia.dateFrom,widget.pasantia.dateTo)} meses',
+                          '${getDiffYMD(widget.pasantia.dateFrom, widget.pasantia.dateTo)} meses',
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(color: Colors.black),
                         ),

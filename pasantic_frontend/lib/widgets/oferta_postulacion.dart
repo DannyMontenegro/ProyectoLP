@@ -116,7 +116,7 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
                     Row(
                       children: [
                         Container(
-                          child: Text('Company:'),
+                          child: Text('Empresa:'),
                           alignment: Alignment.center,
                           constraints: BoxConstraints(minWidth: 150),
                         ),
@@ -124,6 +124,27 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
                           child: Text(
                             enterprise != null
                                 ? enterprise['User']['name']
+                                : 'Empresa',
+                            style: TextStyle(
+                                color: Colors.orange.shade400,
+                                overflow: TextOverflow.ellipsis),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Container(
+                          child: Text('Correo:'),
+                          alignment: Alignment.center,
+                          constraints: BoxConstraints(minWidth: 135),
+                        ),
+                        SizedBox(width: 10,),
+                        Container(
+                          child: Text(
+                            enterprise != null
+                                ? enterprise['User']['email']
                                 : 'Empresa',
                             style: TextStyle(
                                 color: Colors.orange.shade400,
@@ -208,12 +229,4 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
     final jsonData = json.decode(response.body);
     setState(() => enterprise = jsonData['payload']['enterprise']);
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   final size = MediaQuery.of(context).size;
-  //   _getEnterprise(widget.pasantia.idEnterprise);
-  //
-  // }
-
 }

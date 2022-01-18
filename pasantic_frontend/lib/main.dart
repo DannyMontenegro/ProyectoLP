@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Pasantic',
-      initialRoute: 'internships',
+      initialRoute: 'login',
       routes: {
         'home': (_)=>const HomeScreen(),
         'profile': (_)=>const ProfileScreen(),
