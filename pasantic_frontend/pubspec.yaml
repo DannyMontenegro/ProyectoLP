@@ -39,6 +39,7 @@ dependencies:
   url_launcher: ^6.0.18
   shared_preferences: ^2.0.12
   loader_overlay: ^2.0.5
+  syncfusion_flutter_datepicker: ^19.4.43
 
 dev_dependencies:
   flutter_test:

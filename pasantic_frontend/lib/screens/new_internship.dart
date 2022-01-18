@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 
 class NewInternshipScreen extends StatefulWidget {
    
@@ -10,6 +12,10 @@ class NewInternshipScreen extends StatefulWidget {
 
 class _NewInternshipScreenState extends State<NewInternshipScreen> {
   String workmode = "Presencial";
+  final startDate = TextEditingController();
+  final endDate = TextEditingController();
+
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -85,9 +91,52 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
                   ),
                 ],
               ),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.calendar_today,
+                  ),
+                  const SizedBox(width: 20),
+                  const Text("Fecha inicio"),
+                  const SizedBox(width: 20),
+                  SizedBox(
+                    width: 220,
+                    child: TextFormField(
+                      controller: startDate,
+                      onTap: (){
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        _selectStartDate();
+
+                      },
+                    ),
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.calendar_today,
+                  ),
+                  const SizedBox(width: 20),
+                  const Text("Fecha Fin"),
+                  const SizedBox(width: 35),
+                  SizedBox(
+                    width: 220,
+                    child: TextFormField(
+                      controller: endDate,
+                      onTap: (){
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        _selectEndDate();
+
+                      },
+                    ),
+                  )
+                ],
+              ),
+              
               TextFormField(
                     decoration: const InputDecoration(
-                            icon: Icon(Icons.attach_money),
+                            icon: Icon(Icons.school_outlined),
                             hintText: 'Campo de trabajo',
                             labelText: 'Campo',
                           ),
@@ -97,7 +146,7 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
                 TextFormField(
                     maxLines: 10,
                     decoration: const InputDecoration(
-                            icon: Icon(Icons.attach_money),
+                            icon: Icon(Icons.description_outlined),
                             hintText: 'Descripción de la pasantía',
                             labelText: 'Descripción',
                             border: OutlineInputBorder(
@@ -113,7 +162,7 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
                 TextFormField(
                     maxLines: 10,
                     decoration: const InputDecoration(
-                            icon: Icon(Icons.attach_money),
+                            icon: Icon(Icons.dehaze_outlined),
                             hintText: 'Proceso de aplicación',
                             labelText: 'Proceso',
                             border: OutlineInputBorder(
@@ -130,5 +179,31 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
         )
       )
     );
+  }
+
+  Future _selectStartDate() async{
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate:  DateTime(2022),
+      lastDate:  DateTime(2024)
+    );
+
+    var formatter = DateFormat("yyyy-MM-dd");
+
+    if(picked!=null) setState(()=>startDate.text = formatter.format(picked));
+  }
+
+  Future _selectEndDate() async{
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate:  DateTime(2022),
+      lastDate:  DateTime(2024)
+    );
+
+    var formatter = DateFormat("yyyy-MM-dd");
+
+    if(picked!=null) setState(()=>endDate.text = formatter.format(picked));
   }
 }
