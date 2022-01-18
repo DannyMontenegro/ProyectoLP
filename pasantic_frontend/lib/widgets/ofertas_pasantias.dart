@@ -91,15 +91,6 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           )),
-                      Container(
-                        alignment: Alignment.bottomRight,
-                        width: 20,
-                        height: 20,
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          shape: BoxShape.circle,
-                        ),
-                      )
                     ],
                   ),
                   SizedBox(height: 10),

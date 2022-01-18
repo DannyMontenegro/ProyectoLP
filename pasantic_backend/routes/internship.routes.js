@@ -62,7 +62,9 @@ router.post('/',async (req,res,next) => {
 router.get('/:id',async (req, res, next)=>{
     try{
         const id = req.params.id
-        let internship = await models.Internship.findByPk(id);
+        let internship = await models.Internship.findByPk(id,{
+            include: [{model: models.Enterprise}]
+        });
         return res.status(200).json({
             status: 200,
             payload: {
