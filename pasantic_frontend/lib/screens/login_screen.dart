@@ -65,14 +65,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     password = value;
                   },
                 ),
-                const Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "Crear cuenta",
-                    style: TextStyle(
-                        color: Colors.orange,
-                        decoration: TextDecoration.underline,
-                        fontSize: 17),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('register');
+                  },
+                  child: const Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      "Crear cuenta",
+                      style: TextStyle(
+                          color: Colors.orange,
+                          decoration: TextDecoration.underline,
+                          fontSize: 17),
+                    ),
                   ),
                 ),
                 TextButton(

@@ -35,4 +35,6 @@ class InternshipsProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  
 }

@@ -1,6 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:pasantic_frontend/providers/user_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -13,9 +17,12 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   int currentIndex = 2;
 
-  final String _url = 'https://www.espol.edu.ec/';
+  
   @override
   Widget build(BuildContext context) {
+    final dynamic user = (ModalRoute.of(context)!.settings.arguments);
+    final dynamic userData = user['payload']['user'];
+
     return Scaffold(
       appBar: AppBar(
         elevation: 10,
@@ -49,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.all(Radius.circular(3))),
                   constraints: BoxConstraints(
                       maxWidth: MediaQuery.of(context).size.width * 0.6),
-                  child: Text('Miguel Licea Cespedes',
+                  child: Text(userData['name'],
                       style: TextStyle(fontSize: 20),
                       overflow: TextOverflow.ellipsis),
                 )
@@ -69,9 +76,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       maxWidth: MediaQuery.of(context).size.width * 0.6),
                   child: ElevatedButton(
                     onPressed: () async {
-                      await launch(_url);
+                      await launch(userData['Student']['linkedinProfile']);
                     },
-                    child: Text('https://www.linkedin.com/in/miguel-licea',
+                    child: Text(userData['Student']['linkedinProfile'],
                         maxLines: 2,
                         style: TextStyle(fontSize: 20),
                         overflow: TextOverflow.ellipsis),
@@ -91,39 +98,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.all(Radius.circular(3))),
                   constraints: BoxConstraints(
                       maxWidth: MediaQuery.of(context).size.width * 0.6),
-                  child: Text('Ingenieria en Computacion',
-                    textAlign: TextAlign.justify,
-                    maxLines: 2,
-                    style: TextStyle(fontSize: 20),
-                    overflow: TextOverflow.ellipsis),
+                  child: Text(userData['Student']['degree'],
+                      textAlign: TextAlign.justify,
+                      maxLines: 2,
+                      style: TextStyle(fontSize: 20),
+                      overflow: TextOverflow.ellipsis),
                 )
               ]),
               SizedBox(height: 20),
               Row(children: [
                 Container(
-                    
                     constraints: BoxConstraints(
                         maxWidth: MediaQuery.of(context).size.width * 0.3),
                     child: Text('Resumen: ', style: TextStyle(fontSize: 20))),
                 Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(3))),
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.all(Radius.circular(3))),
                   constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * 0.6),
-                  child: Text('Eiusmod elit aute deserunt velit Lorem proident elit et. Deserunt esse irure enim dolore et ex. Anim incididunt anim irure nostrud qui commodo commodo veniam exercitation. Tempor officia do labore sint occaecat dolor minim enim ea. Exercitation id quis do ipsum irure eiusmod aute dolor non excepteur ad occaecat do. Laboris non sint eu pariatur eiusmod enim fugiat.',
-                    textAlign: TextAlign.justify,
-                    maxLines: 7,
-                    style: TextStyle(fontSize: 15),
-                    overflow: TextOverflow.ellipsis),
+                      maxWidth: MediaQuery.of(context).size.width * 0.6),
+                  child: Text(
+                      userData['description'],
+                      textAlign: TextAlign.justify,
+                      maxLines: 7,
+                      style: TextStyle(fontSize: 15),
+                      overflow: TextOverflow.ellipsis),
                 )
               ]),
               SizedBox(height: 20),
               TextButton(
-                onPressed: (){}, 
-                child: Text("Eliminar Cuenta",style: TextStyle(color: Colors.white)),
-                style: ButtonStyle( backgroundColor:MaterialStateProperty.all<Color>(Colors.red) ))
+                  onPressed: () {},
+                  child: Text("Eliminar Cuenta",
+                      style: TextStyle(color: Colors.white)),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.red)))
             ],
           ),
         ),
@@ -135,11 +145,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
         iconSize: 30,
         currentIndex: currentIndex,
         showUnselectedLabels: false,
-        onTap: (index) {
+        onTap: (index) async {
           currentIndex = index;
-          print(currentIndex);
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          int? id = prefs.getInt('id');
+          String data = await User.getUserById('$id');
           if (currentIndex == 0) {
             Navigator.of(context).pushNamed('home');
+          }
+          if(currentIndex == 1) {
+            Navigator.of(context)
+                .pushNamed('applications',arguments: json.decode(data));
           }
         },
         items: const [

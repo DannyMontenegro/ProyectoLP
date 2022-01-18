@@ -22,6 +22,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "PASANTIC",
           style: TextStyle(color: Colors.orange),
         ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.orange),
+          onPressed: () => Navigator.pop(context, false),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -133,19 +137,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   onChanged: (String value){
                   },
                 ),
-                TextButton(
-                  onPressed: (){
-                    
+                
+                ]
+              ),
+              TextButton(
+                  onPressed: (){ 
                   },
-                  child: const Text("Login",
+                  child: const Text("Crear Cuenta",
                                     style: TextStyle(color: Colors.white,
                                                     fontSize: 20)),
                   style :ButtonStyle( backgroundColor:MaterialStateProperty.all<Color>(Colors.orange)
                   )
-
                 ),
-                ]
-              )
             ]
           ),
         ),

@@ -58,6 +58,22 @@ router.post('/',async (req,res,next) => {
     }
 });
 
+//get internship by id
+router.get('/:id',async (req, res, next)=>{
+    try{
+        const id = req.params.id
+        let internship = await models.Internship.findByPk(id);
+        return res.status(200).json({
+            status: 200,
+            payload: {
+                internship: internship
+            }
+        })
+    }catch(err){
+        next(err);
+    }
+});
+
 router.get('/interns/:id', async (req, res, next)=>{
     try{
         const id = req.params.id
