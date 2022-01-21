@@ -14,6 +14,7 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
   String workmode = "Presencial";
   final startDate = TextEditingController();
   final endDate = TextEditingController();
+  var formatter = DateFormat("yyyy-MM-dd");
 
 
   @override
@@ -108,6 +109,14 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
                         _selectStartDate();
 
                       },
+                      validator: (value){
+                        DateTime inicio = DateTime.parse(value!);
+                        
+                        DateTime fin = DateTime.parse(endDate.text);
+                        
+                        return (fin.isBefore(inicio)) ? "Fecha inicio debe ser anterior a fin" : null;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
                   )
                 ],
@@ -124,11 +133,20 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
                     width: 220,
                     child: TextFormField(
                       controller: endDate,
+                      validator: (value){
+                        DateTime inicio = DateTime.parse(startDate.text);
+                        
+                        DateTime fin = DateTime.parse(value!);
+                        
+                        return (inicio.isAfter(fin)) ? "Fecha fin debe ser posterior a inicio" : null;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       onTap: (){
                         FocusScope.of(context).requestFocus(FocusNode());
                         _selectEndDate();
 
                       },
+                      
                     ),
                   )
                 ],
@@ -174,6 +192,15 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
                   onChanged: (String value){
                   },
                 ),
+                TextButton(
+                  onPressed: (){ 
+                  },
+                  child: const Text("Crear Pasantía",
+                                    style: TextStyle(color: Colors.white,
+                                                    fontSize: 20)),
+                  style :ButtonStyle( backgroundColor:MaterialStateProperty.all<Color>(Colors.orange)
+                  )
+                ),
             ]
           )
         )
@@ -189,7 +216,7 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
       lastDate:  DateTime(2024)
     );
 
-    var formatter = DateFormat("yyyy-MM-dd");
+    
 
     if(picked!=null) setState(()=>startDate.text = formatter.format(picked));
   }
@@ -201,8 +228,6 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
       firstDate:  DateTime(2022),
       lastDate:  DateTime(2024)
     );
-
-    var formatter = DateFormat("yyyy-MM-dd");
 
     if(picked!=null) setState(()=>endDate.text = formatter.format(picked));
   }
