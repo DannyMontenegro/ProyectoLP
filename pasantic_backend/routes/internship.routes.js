@@ -152,6 +152,28 @@ router.put('/stop/recluting/:id', async (req, res, next)=>{
     }
 })
 
+router.get('/enterprise/:id', async (req, res, next)=>{
+    try{
+        const enterpriseId = req.params.id
+
+        let internship = await models.Internship.findAll({
+            where : {
+                idEnterprise : enterpriseId
+            }
+        }  
+        )
+        return res.status(201).json({
+            status: 201,
+            payload: {
+                internship : internship
+            }
+        })
+
+    }catch(err){
+        next(err)
+    }
+})
+
 
 
 module.exports =router;

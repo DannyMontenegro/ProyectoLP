@@ -87,7 +87,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       await _getDataFromLogin(email, password);
                       context.loaderOverlay.hide();
                       if (idUser != null && rol != null) {
-                        Navigator.pushNamed(context, 'home');
+                        (rol=="estudiante")? Navigator.pushNamed(context, 'home') : Navigator.pushNamed(context, 'internships');
+                        
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
