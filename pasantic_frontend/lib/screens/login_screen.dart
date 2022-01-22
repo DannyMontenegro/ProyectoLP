@@ -87,7 +87,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       await _getDataFromLogin(email, password);
                       context.loaderOverlay.hide();
                       if (idUser != null && rol != null) {
-                        Navigator.pushNamed(context, 'home');
+                        (rol=="estudiante")? Navigator.pushNamed(context, 'home') : Navigator.pushNamed(context, 'internships');
+                        
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -122,6 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setInt('id', idUser);
       await prefs.setString('rol', rol);
-    }
+      await prefs.setInt('id2', (rol == 'estudiante')? jsonDecoded['payload']['user']['Student']['id']:jsonDecoded['payload']['user']['Enterprise']['id'] );
+          }
   }
 }
