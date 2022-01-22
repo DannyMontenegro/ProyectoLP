@@ -8,10 +8,13 @@ import '../models/models.dart';
 
 class ApplicationsProvider extends ChangeNotifier {
   final String _baseUrl = '10.0.2.2:3001';
+  //final String _baseUrl = '192.168.56.1:3001';
 
   List<Internship> internshipsResponses = [];
 
-  ApplicationsProvider(){print("Iniciando Applications Provider");}
+  ApplicationsProvider() {
+    print("Iniciando Applications Provider");
+  }
 
   Future<String> _getJsonData(String segment) async {
     var url = Uri.http(_baseUrl, segment);

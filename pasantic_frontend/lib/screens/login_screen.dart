@@ -107,6 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _getDataFromLogin(String email, String password) async {
     const String baseUrl = '10.0.2.2:3001';
+    //const String baseUrl = '192.168.56.1:3001';
     const String segment = '/login';
     var url = Uri.http(baseUrl, segment);
 

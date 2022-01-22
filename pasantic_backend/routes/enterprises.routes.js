@@ -4,7 +4,7 @@ var router = express.Router();
 const { validatePagination} = require('../validations/pagination.validator')
 const Sequelize = require('sequelize');
 const models = require('../models');
-const transporter = require('../constants/mail.constants');
+//const transporter = require('../constants/mail.constants');
 
 // Enviar correo
 // let mailOptions = {

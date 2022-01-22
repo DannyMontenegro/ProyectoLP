@@ -35,8 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             margin: const EdgeInsets.only(right: 10),
             child: GestureDetector(
-              onTap: () async{
-                await SystemChannels.platform.invokeMethod('SystemNavigator.pop',true);
+              onTap: () async {
+                await SystemChannels.platform
+                    .invokeMethod('SystemNavigator.pop', true);
               },
               child: const CircleAvatar(
                 backgroundColor: Colors.white,
@@ -62,9 +63,16 @@ class _HomeScreenState extends State<HomeScreen> {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           int? id = prefs.getInt('id');
           String data = await User.getUserById('$id');
+
           if (currentIndex == 2) {
-            Navigator.of(context)
-                .pushNamed('profile', arguments: json.decode(data));
+            if (json.decode(data)['payload']['user']['role'] == "empresa") {
+              print("we are here");
+              Navigator.of(context).pushNamed('profile_enterprise',
+                  arguments: json.decode(data));
+            } else {
+              Navigator.of(context)
+                  .pushNamed('profile', arguments: json.decode(data));
+            }
           }
           if (currentIndex == 1) {
             dynamic pasantias;
