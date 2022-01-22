@@ -18,7 +18,7 @@ class ProfileEnterpriseScreen extends StatefulWidget {
 }
 
 class _ProfileEnterpriseScreenState extends State<ProfileEnterpriseScreen> {
-  int currentIndex = 2;
+  int currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -141,30 +141,17 @@ class _ProfileEnterpriseScreenState extends State<ProfileEnterpriseScreen> {
         showUnselectedLabels: false,
         onTap: (index) async {
           currentIndex = index;
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          int? id = prefs.getInt('id');
-          String data = await User.getUserById('$id');
-          if (currentIndex == 0) {
-            Navigator.of(context).pushNamed('home');
-          }
-          if (currentIndex == 1) {
-            dynamic pasantias;
-
-            pasantias = await User.getInsternshipsOfStudent(
-                '${json.decode(data)['payload']['user']['Student']['id']}');
-            Navigator.of(context)
-                .pushNamed('applications', arguments: json.decode(pasantias));
-          }
+          Navigator.of(context).pushNamed('internships');
         },
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.work_outlined),
               label: 'Pasantias',
               backgroundColor: Colors.orange),
-          BottomNavigationBarItem(
+          /*BottomNavigationBarItem(
               icon: Icon(Icons.archive_rounded),
               label: 'Postulaciones',
-              backgroundColor: Colors.orange),
+              backgroundColor: Colors.orange),*/
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Perfil',

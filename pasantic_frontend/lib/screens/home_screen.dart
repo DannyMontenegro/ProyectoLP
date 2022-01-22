@@ -66,7 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
           if (currentIndex == 2) {
             if (json.decode(data)['payload']['user']['role'] == "empresa") {
-              print("we are here");
               Navigator.of(context).pushNamed('profile_enterprise',
                   arguments: json.decode(data));
             } else {
