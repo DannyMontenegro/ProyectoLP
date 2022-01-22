@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:loader_overlay/src/overlay_controller_widget_extension.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 
 class NewInternshipScreen extends StatefulWidget {
@@ -14,7 +19,16 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
   String workmode = "Presencial";
   final startDate = TextEditingController();
   final endDate = TextEditingController();
+  final nombre = TextEditingController();
+  final localizacion = TextEditingController();
+  final salario = TextEditingController();
+  final descripcion = TextEditingController();
+  final proceso = TextEditingController();
+  final campo = TextEditingController();
+
   var formatter = DateFormat("yyyy-MM-dd");
+
+ 
 
 
   @override
@@ -38,6 +52,7 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
                                     fontSize: 25)
               ),
               TextFormField(
+                    controller: nombre,
                     decoration: const InputDecoration(
                             icon: Icon(Icons.title),
                             hintText: 'Nombre de la pasantía',
@@ -47,6 +62,7 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
                   },
                 ),
                 TextFormField(
+                    controller: localizacion,
                     decoration: const InputDecoration(
                             icon: Icon(Icons.location_on),
                             hintText: 'Lugar de la pasantía',
@@ -56,6 +72,7 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
                   },
                 ),
                 TextFormField(
+                    controller: salario,
                     decoration: const InputDecoration(
                             icon: Icon(Icons.attach_money),
                             hintText: 'Salario por mes',
@@ -82,7 +99,7 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
                         
                       });
                     },
-                    items: <String>['Presencial', 'Distancia']
+                    items: <String>['Presencial', 'Remoto']
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
@@ -110,6 +127,9 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
 
                       },
                       validator: (value){
+                        if(endDate.text==""){
+                          return null;
+                        }
                         DateTime inicio = DateTime.parse(value!);
                         
                         DateTime fin = DateTime.parse(endDate.text);
@@ -134,6 +154,9 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
                     child: TextFormField(
                       controller: endDate,
                       validator: (value){
+                        if(startDate.text==''){
+                          return null;
+                        }
                         DateTime inicio = DateTime.parse(startDate.text);
                         
                         DateTime fin = DateTime.parse(value!);
@@ -153,6 +176,7 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
               ),
               
               TextFormField(
+                    controller: campo,
                     decoration: const InputDecoration(
                             icon: Icon(Icons.school_outlined),
                             hintText: 'Campo de trabajo',
@@ -163,6 +187,7 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
                 ),
                 TextFormField(
                     maxLines: 10,
+                    controller: descripcion,
                     decoration: const InputDecoration(
                             icon: Icon(Icons.description_outlined),
                             hintText: 'Descripción de la pasantía',
@@ -179,6 +204,7 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
                 const SizedBox(height: 20),
                 TextFormField(
                     maxLines: 10,
+                    controller: proceso, 
                     decoration: const InputDecoration(
                             icon: Icon(Icons.dehaze_outlined),
                             hintText: 'Proceso de aplicación',
@@ -193,7 +219,11 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
                   },
                 ),
                 TextButton(
-                  onPressed: (){ 
+                  onPressed: () async { 
+                    context.loaderOverlay.show();
+                    await saveInternship();
+                    context.loaderOverlay.hide();
+                    Navigator.pushNamed(context, 'internships');
                   },
                   child: const Text("Crear Pasantía",
                                     style: TextStyle(color: Colors.white,
@@ -228,7 +258,34 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
       firstDate:  DateTime(2022),
       lastDate:  DateTime(2024)
     );
-
+    //print(formatter.format(picked!));
     if(picked!=null) setState(()=>endDate.text = formatter.format(picked));
+    print(endDate.text);
+  }
+
+  saveInternship() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    const String baseUrl = '10.0.2.2:3001';
+    const String segment = '/internships';
+
+    var url = Uri.http(baseUrl, segment);
+    final body = {
+      'title': nombre.text,
+      'description' : descripcion.text,
+      'industry': campo.text,
+      'internshipProcess': proceso.text,
+      'dateFrom': startDate.text,
+      'dateTo': endDate.text,
+      'location': localizacion.text,
+      'workMode': workmode,
+      'idEnterprise': prefs.getInt('id2'),
+      'payment': salario.text
+    };
+    final jsonString = json.encode(body);
+    await http.post(url,
+        headers: {"Content-Type": "application/json"}, body: jsonString);
+    setState((){});
+
+
   }
 }
