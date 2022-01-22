@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pasantic_frontend/providers/applications_provider.dart';
+import 'package:pasantic_frontend/providers/enterpriseInternship_provider.dart';
 import 'package:pasantic_frontend/providers/internships_provider.dart';
 import 'package:pasantic_frontend/screens/internship_detail_screen.dart';
 import 'package:pasantic_frontend/screens/screens.dart';
@@ -15,7 +16,7 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_)=> InternshipsProvider(),lazy: false,),
-
+        ChangeNotifierProvider(create: (_)=> EnterpriseInternshipProvider(), lazy: false,),
       ],
       child: const MyApp(),
       );
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Pasantic',
-      initialRoute: 'internships',
+      initialRoute: 'login',
       routes: {
         'home': (_)=>const HomeScreen(),
         'profile': (_)=>const ProfileScreen(),

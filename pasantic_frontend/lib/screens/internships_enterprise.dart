@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pasantic_frontend/providers/enterpriseInternship_provider.dart';
+import 'package:pasantic_frontend/widgets/pasantias_empresa.dart';
+import 'package:provider/provider.dart';
 
 
 class IntershipsScreen extends StatefulWidget{
@@ -15,6 +18,7 @@ class _IntershipsScreenState extends State<IntershipsScreen>{
 
   @override
   Widget build(BuildContext context){
+    final internshipProvider = Provider.of<EnterpriseInternshipProvider>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 10,
@@ -24,8 +28,8 @@ class _IntershipsScreenState extends State<IntershipsScreen>{
           style: TextStyle(color: Colors.orange),
         ),
       ),
-      body: const Center(
-        child: Text("Pasantías creadas"),
+      body: PasantiasEmpresaCards(
+        pasantias: internshipProvider.internshipsResponses 
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
