@@ -6,3 +6,4 @@ export 'package:pasantic_frontend/screens/applications_screen.dart';
 export 'package:pasantic_frontend/screens/applications_screen.dart';
 export 'package:pasantic_frontend/screens/internships_enterprise.dart';
 export 'package:pasantic_frontend/screens/new_internship.dart';
+export 'package:pasantic_frontend/screens/intership_detail_enterprise_screen.dart';

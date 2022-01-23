@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 import '../models/models.dart';
 
 class InternshipsProvider extends ChangeNotifier {
-  final String _baseUrl = '10.0.2.2:3001';
-  //final String _baseUrl = '192.168.56.1:3001';
+  //final String _baseUrl = '10.0.2.2:3001';
+  final String _baseUrl = '192.168.56.1:3001';
 
   List<Internship> internshipsResponses = [];
 

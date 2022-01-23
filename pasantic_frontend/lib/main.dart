@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
         'profile': (_) => const ProfileScreen(),
         'profile_enterprise': (_) => const ProfileEnterpriseScreen(),
         'details': (_) => const InternshipDetailScreen(),
+        'details_enterprise': (_) => const InternshipDetailEnterpriseScreen(),
         'login': (_) => const LoginScreen(),
         'register': (_) => const RegisterScreen(),
         'applications': (_) => const ApplicationsScreen(),

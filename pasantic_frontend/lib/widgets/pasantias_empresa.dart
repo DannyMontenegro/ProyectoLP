@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:pasantic_frontend/models/models.dart';
 import 'package:pasantic_frontend/helpers/getDiffTime.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pasantic_frontend/providers/user_provider.dart';
+import 'package:pasantic_frontend/models/internship_model.dart';
 
 class PasantiasEmpresaCards extends StatefulWidget {
   final List<Internship> pasantias;
@@ -46,21 +50,27 @@ class CustomCardOffer extends StatefulWidget {
 
 class _CustomCardOfferState extends State<CustomCardOffer> {
   dynamic enterprise;
-  
+
   @override
   void initState() {
-    
     super.initState();
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () =>
-          Navigator.pushNamed(context, 'details', arguments: widget.pasantia),
+      onTap: () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        int? id = prefs.getInt('id');
+        String data = await User.getUserById('$id');
+        if (json.decode(data)['payload']['user']['role'] == "empresa") {
+          Navigator.pushNamed(context, 'details_enterprise',
+              arguments: widget.pasantia);
+        } else {
+          Navigator.pushNamed(context, 'details', arguments: widget.pasantia);
+        }
+      },
       child: SizedBox(
         width: size.width,
         child: Card(
@@ -76,7 +86,7 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
                   Row(
                     children: [
                       Container(
-                          constraints:const BoxConstraints(minWidth: 150),
+                          constraints: const BoxConstraints(minWidth: 150),
                           alignment: Alignment.center,
                           child: Text(
                             widget.pasantia.title,
@@ -136,7 +146,7 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
                       )
                     ],
                   ),
-                 const SizedBox(height: 10),
+                  const SizedBox(height: 10),
                 ],
               ),
             )),
