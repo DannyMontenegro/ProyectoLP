@@ -6,8 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/models.dart';
 
 class EnterpriseInternshipProvider extends ChangeNotifier {
-  //final String _baseUrl = '10.0.2.2:3001';
-  final String _baseUrl = '192.168.56.1:3001';
+  final String _baseUrl = '10.0.2.2:3001';
+  //final String _baseUrl = '192.168.56.1:3001';
 
   List<Internship> internshipsResponses = [];
 

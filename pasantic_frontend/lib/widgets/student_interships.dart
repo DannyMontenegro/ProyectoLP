@@ -57,6 +57,8 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    var idEstudiante = widget.student["idStudent"];
+    var idPasantia = widget.student["idInternship"];
     return GestureDetector(
       onTap: () async {
         int id = widget.student["idStudent"];
@@ -127,8 +129,34 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
                             color: Colors.green,
                           ),
                           tooltip: 'Accept',
-                          onPressed: () {
-                            print("Accepted");
+                          onPressed: () async {
+                            const String baseUrl = '10.0.2.2:3001';
+                            //const String baseUrl = '192.168.56.1:3001';
+                            const String segment =
+                                '/internshipStudent/studentAccept';
+                            var url = Uri.http(baseUrl, segment);
+
+                            final body = {
+                              'idStudent': '$idEstudiante',
+                              'idInternship': '$idPasantia'
+                            };
+                            final jsonString = json.encode(body);
+                            final response = await http.put(url,
+                                headers: {"Content-Type": "application/json"},
+                                body: jsonString);
+                            final jsonDecoded = json.decode(response.body);
+                            if (jsonDecoded['status'] == "200" ||
+                                jsonDecoded['status'] == 200) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Se ha aceptado.')));
+                            } else {
+                              print(jsonDecoded);
+                              print(widget.student);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("Error al aceptar")));
+                            }
                           },
                         ),
                         IconButton(
@@ -161,7 +189,9 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
 }
 
 getUserById(String id) async {
-  var url = Uri.http('192.168.56.1:3001', '/users/$id');
+  var url = Uri.http('10.0.2.2:3001', '/users/$id');
+
+  //var url = Uri.http('192.168.56.1:3001', '/users/$id');
 
   final response = await http.get(url);
   final jsonData = response.body;

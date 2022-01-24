@@ -38,8 +38,8 @@ class _InternshipDetailEnterpriseScreen
   _getIdUSer() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? id = prefs.getInt('id');
-    //var url = Uri.http('10.0.2.2:3001', '/users/$id');
-    var url = Uri.http('192.168.56.1:3001', '/users/$id');
+    var url = Uri.http('10.0.2.2:3001', '/users/$id');
+    //var url = Uri.http('192.168.56.1:3001', '/users/$id');
     final response = await http.get(url);
     final jsonData = json.decode(response.body);
     idStudent = jsonData['payload']['user']['Student']['id'];
@@ -53,7 +53,7 @@ class _InternshipDetailEnterpriseScreen
   Widget build(BuildContext context) {
     final Internship pasantia =
         ModalRoute.of(context)!.settings.arguments as Internship;
-    _getEnterprise(pasantia.idEnterprise);
+    //_getEnterprise(pasantia.idEnterprise);
 
     return Scaffold(
       appBar: AppBar(
@@ -126,8 +126,10 @@ class _InternshipDetailEnterpriseScreen
                   onPressed: () async {
                     List lista = [];
                     var id = pasantia.id;
-                    var url = Uri.http(
-                        '192.168.56.1:3001', '/internships/interns/$id');
+
+                    var url =
+                        Uri.http('10.0.2.2:3001', '/internships/interns/$id');
+                    //var url = Uri.http('192.168.56.1:3001', '/internships/interns/$id');
 
                     var jsonData = await http.get(url);
                     var jsonDecoded = json.decode(jsonData.body);
@@ -140,7 +142,8 @@ class _InternshipDetailEnterpriseScreen
 
                     for (int i = 0; i < lista.length; i++) {
                       id = lista[i]["idStudent"];
-                      url = Uri.http('192.168.56.1:3001', '/students/$id');
+                      url = Uri.http('10.0.2.2:3001', '/students/$id');
+                      //url = Uri.http('192.168.56.1:3001', '/students/$id');
                       jsonData = await http.get(url);
                       jsonDecoded = json.decode(jsonData.body);
                       lista[i]['estudiante'] =
@@ -166,7 +169,9 @@ class _InternshipDetailEnterpriseScreen
   }
 
   _getEnterprise(int id) async {
-    const String baseUrl = '192.168.56.1:3001';
+    //const String baseUrl = '192.168.56.1:3001';
+    const String baseUrl = '10.0.2.2:3001';
+
     String segment = '/enterprises/$id';
     var url = Uri.http(baseUrl, segment);
     final response = await http.get(url);
@@ -190,7 +195,16 @@ class SecondRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Second Route'),
+        elevation: 10,
+        centerTitle: true,
+        title: const Text(
+          "PASANTIC",
+          style: TextStyle(color: Colors.orange),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.orange),
+          onPressed: () => Navigator.pop(context, false),
+        ),
       ),
       body: StudentIntershipWidget(students: lista),
     );
