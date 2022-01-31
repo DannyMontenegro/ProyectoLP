@@ -62,12 +62,15 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
     return GestureDetector(
       onTap: () async {
         int id = widget.student["idStudent"];
+        print(id);
         String data = await getUserById('$id');
+        /*
         if (json.decode(data)['payload']['user']['role'] == "empresa") {
           print("hello");
         } else {
           print("hello");
         }
+        */
       },
       child: SizedBox(
         width: size.width,
@@ -189,8 +192,7 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
 }
 
 getUserById(String id) async {
-  var url = Uri.http('10.0.2.2:3001', '/users/$id');
-
+  var url = Uri.http('10.0.2.2:3001', '/students/$id');
   //var url = Uri.http('192.168.56.1:3001', '/users/$id');
 
   final response = await http.get(url);

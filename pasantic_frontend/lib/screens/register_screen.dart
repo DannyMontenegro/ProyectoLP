@@ -212,7 +212,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       segment = "/enterprises";
       body = {
         'idUser': id.toString(),
-        'phone_numer': phone.text
+        'phone_number': phone.text
       };
     }
     url = Uri.http(baseUrl, segment);

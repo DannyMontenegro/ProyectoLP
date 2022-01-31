@@ -42,7 +42,7 @@ class _InternshipDetailEnterpriseScreen
     //var url = Uri.http('192.168.56.1:3001', '/users/$id');
     final response = await http.get(url);
     final jsonData = json.decode(response.body);
-    idStudent = jsonData['payload']['user']['Student']['id'];
+    idStudent = jsonData['payload']['user']['Enterprise']['id'];
     print("Obteniendo el id: $idStudent");
     if (this.mounted) {
       setState(() {});

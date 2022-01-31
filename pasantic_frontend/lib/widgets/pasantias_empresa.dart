@@ -27,7 +27,9 @@ class _PasantiasEmpresaCardsState extends State<PasantiasEmpresaCards> {
   }
 
   @override
-  void dispose() {}
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
