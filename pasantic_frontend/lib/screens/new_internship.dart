@@ -260,7 +260,6 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
     );
     //print(formatter.format(picked!));
     if(picked!=null) setState(()=>endDate.text = formatter.format(picked));
-    print(endDate.text);
   }
 
   saveInternship() async {

@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:loader_overlay/src/overlay_controller_widget_extension.dart';
 
 class RegisterScreen extends StatefulWidget {
    
@@ -11,6 +15,14 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   String value = "Estudiante";
   IconData icon = Icons.person_outline;
+  final nombre = TextEditingController();
+  final contrasenia = TextEditingController();
+  final email = TextEditingController();
+  final descripcion = TextEditingController();
+  final profile = TextEditingController();
+  final degree = TextEditingController();
+  final phone = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           style: TextStyle(color: Colors.orange),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.orange),
+          icon: const Icon(Icons.arrow_back, color: Colors.orange),
           onPressed: () => Navigator.pop(context, false),
         ),
       ),
@@ -38,6 +50,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontSize: 25),
              ),
               TextFormField(
+                    controller: email,
                     decoration: const InputDecoration(
                     icon: Icon(Icons.email),
                     hintText: 'Email de registro',
@@ -51,6 +64,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 TextFormField(
+                    controller: contrasenia,
                     decoration: const InputDecoration(
                     icon: Icon(Icons.password),
                     hintText: 'Contraseña de registro',
@@ -61,6 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText:  true,
                 ),
                 TextFormField(
+                    controller: nombre,
                     decoration:  InputDecoration(
                     icon: Icon(icon),
                     hintText: 'Nombre de registro',
@@ -70,6 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 TextFormField(
+                    controller: descripcion,
                     decoration: const InputDecoration(
                     icon: Icon(Icons.description_outlined),
                     hintText: 'Cuéntanos sobre tí',
@@ -108,6 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               if(value=="Empresa")
               TextFormField(
+                    controller: phone,
                     decoration: const InputDecoration(
                     icon: Icon(Icons.local_phone_outlined),
                     hintText: 'Número telefónico',
@@ -120,6 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Column(
                 children: [
                   TextFormField(
+                    controller: degree,
                     decoration: const InputDecoration(
                     icon: Icon(Icons.school_outlined),
                     hintText: 'Carrera',
@@ -129,6 +147,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 TextFormField(
+                    controller: profile,
                     decoration: const InputDecoration(
                     icon: Icon(Icons.insert_link),
                     hintText: 'Perfil de Linkedin',
@@ -141,7 +160,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ]
               ),
               TextButton(
-                  onPressed: (){ 
+                  onPressed: ()async { 
+                    context.loaderOverlay.show();
+                    await registerUser();
+                    context.loaderOverlay.hide();
+                    Navigator.pushNamed(context, 'login');
                   },
                   child: const Text("Crear Cuenta",
                                     style: TextStyle(color: Colors.white,
@@ -154,5 +177,51 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+
+  }
+
+  registerUser() async {
+    const String baseUrl = '10.0.2.2:3001';
+    String segment = '/users';
+
+    var url = Uri.http(baseUrl, segment);
+    var body = {
+      'email': email.text,
+      'password':contrasenia.text,
+      'name': nombre.text,
+      'description': descripcion.text,
+      'role': value.toLowerCase()
+    };
+
+    var jsonString = json.encode(body);
+    final res = await http.post(url,
+        headers: {"Content-Type": "application/json"}, body: jsonString);
+
+    final user = json.decode(res.body);
+    print(user);
+    var id = user["payload"]["user"]["id"];
+
+    if(value=="Estudiante"){
+      segment = "/students";
+      body = {
+        'idUser': id.toString(),
+        'linkedinProfile': profile.text,
+        'degree': degree.text
+      };
+    }else{
+      segment = "/enterprises";
+      body = {
+        'idUser': id.toString(),
+        'phone_numer': phone.text
+      };
+    }
+    url = Uri.http(baseUrl, segment);
+    jsonString = json.encode(body);
+    await http.post(url,
+        headers: {"Content-Type": "application/json"}, body: jsonString);
+    setState((){});
+
+
+
   }
 }
