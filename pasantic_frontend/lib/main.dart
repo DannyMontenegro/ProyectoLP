@@ -24,7 +24,7 @@ class AppState extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => EnterpriseInternshipProvider(),
-          lazy: false,
+          lazy: true,
         ),
       ],
       child: const MyApp(),

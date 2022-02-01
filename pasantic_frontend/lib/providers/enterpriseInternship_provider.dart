@@ -12,7 +12,7 @@ class EnterpriseInternshipProvider extends ChangeNotifier {
   List<Internship> internshipsResponses = [];
 
   EnterpriseInternshipProvider() {
-    getInternships();
+    //getInternships();
   }
 
   Future<String> _getJsonData(String segment) async {
@@ -26,13 +26,12 @@ class EnterpriseInternshipProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final jsonData =
         await _getJsonData('/internships/enterprise/${prefs.get('id2')}');
-
     final jsonDecoded = json.decode(jsonData);
+    internshipsResponses.clear();
     for (int i = 0; i < jsonDecoded['payload']['internship'].length; i++) {
       internshipsResponses
           .add(Internship.fromJson(jsonDecoded['payload']['internship'][i]));
     }
-
-    notifyListeners();
+    //notifyListeners();
   }
 }

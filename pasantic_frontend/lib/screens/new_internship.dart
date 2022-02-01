@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:loader_overlay/src/overlay_controller_widget_extension.dart';
+import 'package:pasantic_frontend/providers/enterpriseInternship_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -222,8 +224,9 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
                   onPressed: () async { 
                     context.loaderOverlay.show();
                     await saveInternship();
+                    await Provider.of<EnterpriseInternshipProvider>(context, listen: false).getInternships();
                     context.loaderOverlay.hide();
-                    Navigator.pushNamed(context, 'internships');
+                    Navigator.of(context).pushNamed('internships');
                   },
                   child: const Text("Crear Pasantía",
                                     style: TextStyle(color: Colors.white,
@@ -283,7 +286,7 @@ class _NewInternshipScreenState extends State<NewInternshipScreen> {
     final jsonString = json.encode(body);
     await http.post(url,
         headers: {"Content-Type": "application/json"}, body: jsonString);
-    setState((){});
+    //setState((){});
 
 
   }

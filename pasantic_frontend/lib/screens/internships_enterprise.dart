@@ -20,8 +20,9 @@ class _IntershipsScreenState extends State<IntershipsScreen> {
   @override
   Widget build(BuildContext context) {
     final internshipProvider =
-        Provider.of<EnterpriseInternshipProvider>(context);
-    return Scaffold(
+        Provider.of<EnterpriseInternshipProvider>(context, listen: false);
+        internshipProvider.getInternships();
+    return Scaffold(  
         appBar: AppBar(
           elevation: 10,
           centerTitle: true,

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:http/http.dart' as http;
+import 'package:pasantic_frontend/providers/enterpriseInternship_provider.dart';
+import 'package:pasantic_frontend/providers/internships_provider.dart';
+import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -85,6 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       context.loaderOverlay.show();
 
                       await _getDataFromLogin(email, password);
+                      await Provider.of<EnterpriseInternshipProvider>(context, listen: false).getInternships();
+                      //await Provider.of<InternshipsProvider>(context, listen: false).getInternships();
+                      
                       context.loaderOverlay.hide();
                       if (idUser != null && rol != null) {
                         (rol == "estudiante")

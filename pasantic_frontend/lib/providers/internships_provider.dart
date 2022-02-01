@@ -33,7 +33,7 @@ class InternshipsProvider extends ChangeNotifier {
     for (int i = 0; i < jsonDecoded['payload'].length; i++) {
       internshipsResponses.add(Internship.fromJson(jsonDecoded['payload'][i]));
     }
-
+    print(jsonDecoded);
     notifyListeners();
   }
 }
