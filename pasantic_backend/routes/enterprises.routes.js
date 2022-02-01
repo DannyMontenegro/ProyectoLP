@@ -4,22 +4,10 @@ var router = express.Router();
 const { validatePagination} = require('../validations/pagination.validator')
 const Sequelize = require('sequelize');
 const models = require('../models');
-//const transporter = require('../constants/mail.constants');
+
 
 // Enviar correo
-// let mailOptions = {
-//   from: process.env.MAIL_SENDER_USER,
-//   to: updatedUser.Email,
-//   subject: 'Confirmacion de Actualizacion de Contrasena',
-//   text: `Estimado ${teacher.FirstName} ${teacher.LastName},\nSus credenciales han sido actualizadas con exito en el sistema. Sus credenciales son: \nUsuario: ${updatedUser.UserName} \nContrasena: ${newPass} \n\nEste mensaje ha sido generado de forma automatica, por favor, no responda a este remitente.`
-// };
-// transporter.sendMail(mailOptions, function(error, info){
-//   if (error) {
-//     console.log(error);
-//   } else {
-//     console.log('Email sent: ' + info.response);
-//   }
-// });
+
 
 //get_enterprises
 router.get('/', async function(req, res, next) {

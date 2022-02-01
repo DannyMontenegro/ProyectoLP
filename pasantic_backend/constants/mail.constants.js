@@ -1,4 +1,4 @@
-/*const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 
 let transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -8,4 +8,4 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-module.exports = transporter*/
+module.exports = transporter
