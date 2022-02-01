@@ -68,7 +68,7 @@ router.put('/studentAccept', async (req, res, next) =>{
 
         let mailOptionsAccept = {
             from: "pasantic2022@gmail.com",
-            to: "angelmigue.cespedes@gmail.com",
+            to: "mailUser",
             subject: 'Confirmacion de Postulacion a Pasantias',
             text: `Estimado ${user.name},\nSu Postulacion a la ayudantia con titulo ${titleInternship} ha sido aceptada.\n\nEste mensaje ha sido generado de forma automatica, por favor, no responda a este remitente.`
           };
@@ -113,14 +113,14 @@ router.put('/studentAccept', async (req, res, next) =>{
             }
         });
 
-        let internship = await models.Internship.findByPk(idInternship,{
+        let internship2 = await models.Internship.findByPk(idInternship,{
             include: [{model:models.Enterprise },{model: models.InternshipStudent}]
         });
         
         res.status(200).json({
             status: 200,
             payload: {
-                internship: internship
+                internship: internship2
             }
         });
 
