@@ -30,3 +30,8 @@ Pasantic es una aplicación que brinda a empresas y estudiantes un medio de comu
 
 ## Frontend
 Se está utilizando Flutter junto con Android Studio, para ejecutar el apk es preferible emular un dispositivo Pixel 5 (1080 x 2340).
+
+## Desarrolladores 
+* [Miguel Licea](https://github.com/miglcesp01)
+* [Raúl Villao](https://github.com/Rv2719)
+* [Danny Montenegro](https://github.com/DannyMontenegro)
