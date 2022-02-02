@@ -77,7 +77,7 @@ class _ProfileEnterpriseScreenState extends State<ProfileEnterpriseScreen> {
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.all(Radius.circular(3))),
                   constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width * 0.6),
+                      maxWidth: MediaQuery.of(context).size.width * 0.5),
                   child: ElevatedButton(
                     onPressed: () async {
                       await launch("https://wa.me/" +

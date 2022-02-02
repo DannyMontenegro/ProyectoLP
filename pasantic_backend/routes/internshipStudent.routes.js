@@ -68,7 +68,7 @@ router.put('/studentAccept', async (req, res, next) =>{
 
         let mailOptionsAccept = {
             from: "pasantic2022@gmail.com",
-            to: "mailUser",
+            to: mailUser,
             subject: 'Confirmacion de Postulacion a Pasantias',
             text: `Estimado ${user.name},\nSu Postulacion a la ayudantia con titulo ${titleInternship} ha sido aceptada.\n\nEste mensaje ha sido generado de forma automatica, por favor, no responda a este remitente.`
           };

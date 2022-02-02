@@ -10,6 +10,6 @@ int getDiffYMD(DateTime then, DateTime now) {
     final monthAgo = DateTime(now.year, now.month - 1, then.day);
     days = now.difference(monthAgo).inDays + 1;
   }
+  if ((months + years * 12) == 0) return 1;
   return months + years * 12;
-  
 }

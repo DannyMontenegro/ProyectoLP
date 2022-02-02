@@ -30,11 +30,6 @@ class _InternshipDetailEnterpriseScreen
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   _getIdUSer() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? id = prefs.getInt('id');

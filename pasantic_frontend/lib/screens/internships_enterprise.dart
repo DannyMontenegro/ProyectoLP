@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pasantic_frontend/providers/enterpriseInternship_provider.dart';
 import 'package:pasantic_frontend/widgets/pasantias_empresa.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,21 @@ class _IntershipsScreenState extends State<IntershipsScreen> {
             "PASANTIC",
             style: TextStyle(color: Colors.orange),
           ),
+          actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 10),
+            child: GestureDetector(
+              onTap: () async {
+                await SystemChannels.platform
+                    .invokeMethod('SystemNavigator.pop', true);
+              },
+              child: const CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Icon(Icons.logout_rounded),
+              ),
+            ),
+          )
+        ],
         ),
         body: PasantiasEmpresaCards(
             pasantias: internshipProvider.internshipsResponses),

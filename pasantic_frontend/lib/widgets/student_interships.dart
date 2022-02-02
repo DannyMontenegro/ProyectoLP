@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -27,7 +29,9 @@ class _StudentsPasantiasEmpresaCardsState
   }
 
   @override
-  void dispose() {}
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +91,7 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
                 children: [
                   Container(
                     constraints: const BoxConstraints(minWidth: 150),
-                    alignment: Alignment.center,
+                    alignment: Alignment.centerLeft,
                     child: Column(
                       children: [
                         const SizedBox(height: 10),
@@ -95,7 +99,7 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
                           children: [
                             Container(
                                 constraints:
-                                    const BoxConstraints(minWidth: 150),
+                                    const BoxConstraints(minWidth: 130),
                                 alignment: Alignment.center,
                                 child: Text(
                                   widget.student["estudiante"]["name"],
@@ -111,12 +115,16 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
                             Container(
                               child: const Text('Correo:'),
                               alignment: Alignment.center,
-                              constraints: const BoxConstraints(minWidth: 145),
+                              constraints: const BoxConstraints(minWidth: 120),
                             ),
-                            Text(
-                              widget.student["estudiante"]["email"].toString(),
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.orange.shade400),
+                            Container(
+                              constraints: BoxConstraints(maxWidth:150),
+                              child: Text(
+                                widget.student["estudiante"]["email"].toString(),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(color: Colors.orange.shade400),
+                              ),
                             )
                           ],
                         ),
@@ -124,7 +132,8 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
                     ),
                   ),
                   Container(
-                      alignment: Alignment.centerRight,
+                      constraints: BoxConstraints(maxWidth:48),
+                      alignment: Alignment.centerLeft,
                       child: Row(children: [
                         IconButton(
                           icon: const Icon(
@@ -154,34 +163,12 @@ class _CustomCardOfferState extends State<CustomCardOffer> {
                                   const SnackBar(
                                       content: Text('Se ha aceptado.')));
                             } else {
-                              print(jsonDecoded);
-                              print(widget.student);
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                       content: Text("Error al aceptar")));
                             }
                           },
-                        ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.highlight_remove_outlined,
-                            color: Colors.red,
-                          ),
-                          tooltip: 'Remove',
-                          onPressed: () {
-                            print("Remove");
-                          },
-                        ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.more_time_outlined,
-                            color: Colors.grey,
-                          ),
-                          tooltip: 'Put to wait',
-                          onPressed: () {
-                            print("waitting");
-                          },
-                        ),
+                        )
                       ])),
                 ],
               ),

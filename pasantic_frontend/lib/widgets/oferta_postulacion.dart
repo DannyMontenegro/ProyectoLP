@@ -27,7 +27,6 @@ class _PostulacionesCardsState extends State<PostulacionesCards> {
     return ListView.builder(
         itemCount: widget.pasantias.length,
         itemBuilder: (BuildContext context, int index) {
-          print(widget.pasantias[index]);
           return CustomCardOffer(pasantia: widget.pasantias[index]);
           // return CustomCardOffer(pasantia: widget.pasantias[index]);
         });
